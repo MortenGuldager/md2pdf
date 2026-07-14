@@ -1,0 +1,59 @@
+/* onboarding — illustrated step-by-step guide. Each `##` heading starts a new
+   page (one card per page). Callouts, figures and a two-code table styled for
+   customer-facing hand-holding. */
+@page {
+  size: A4;
+  margin: 18mm 16mm 16mm 16mm;
+  @bottom-center { content: "Kom godt i gang  ·  side " counter(page);
+                   font-size: 8pt; color: #888; }
+}
+* { box-sizing: border-box; }
+body { font-family: "DejaVu Sans", "Liberation Sans", Arial, sans-serif;
+       font-size: 11.5pt; line-height: 1.5; color: #1c2733; }
+h1 { font-size: 23pt; margin: 0 0 4pt; color: #0b4f6c; }
+h1 + p.lead { font-size: 12.5pt; color: #46586a; margin-top: 0; }
+/* each STEP starts on a new page = one card per page */
+h2 { font-size: 16pt; color: #0b4f6c; margin: 0 0 8pt;
+     padding-bottom: 5pt; border-bottom: 2px solid #d6e4ec; break-before: page; }
+h3 { font-size: 13pt; color: #0b4f6c; margin: 14pt 0 4pt; }
+ul, ol { margin: 6pt 0 8pt; padding-left: 20pt; }
+li { margin: 3pt 0; }
+strong { color: #103a4d; }
+code { background: #eef3f6; padding: 1px 4px; border-radius: 3px;
+       font-family: "DejaVu Sans Mono", monospace; font-size: 10pt; }
+a { color: #0b6ca8; text-decoration: none; }
+
+/* callout boxes:  > NOTE: ...   > WARN: ...   > TIP: ...  */
+blockquote { margin: 10pt 0; padding: 9pt 12pt 9pt 14pt; border-radius: 6px;
+             border-left: 5px solid #999; background: #f4f6f8; break-inside: avoid; }
+blockquote p { margin: 0; }
+blockquote.warn { border-left-color: #c0392b; background: #fdeeec; }
+blockquote.note { border-left-color: #0b6ca8; background: #eef5fb; }
+blockquote.tip  { border-left-color: #2e8b57; background: #eef8f1; }
+blockquote .tag { font-weight: 700; letter-spacing: .03em; }
+blockquote.warn .tag { color: #c0392b; }
+blockquote.note .tag { color: #0b6ca8; }
+blockquote.tip  .tag { color: #2e8b57; }
+
+/* tables */
+table { border-collapse: collapse; width: 100%; margin: 10pt 0; font-size: 10.5pt;
+        break-inside: avoid; }
+th, td { border: 1px solid #cdd9e1; padding: 6pt 8pt; text-align: left; vertical-align: top; }
+th { background: #0b4f6c; color: #fff; }
+
+/* figures + captions */
+figure { margin: 12pt 0; break-inside: avoid; text-align: center; }
+figure img { max-width: 100%; max-height: 150mm; border: 1px solid #cdd9e1;
+             border-radius: 6px; }
+figcaption { font-size: 10pt; color: #5a6b78; margin-top: 5pt; font-style: italic; }
+
+/* placeholder when an image is not yet in place */
+.placeholder { border: 2px dashed #c0392b; border-radius: 8px; background: #fff7f6;
+               padding: 22pt 14pt; color: #c0392b; text-align: center;
+               break-inside: avoid; }
+.placeholder .ph-cam { font-size: 12pt; font-weight: 700; letter-spacing: .15em;
+                       border: 2px solid #c0392b; border-radius: 20px;
+                       padding: 3pt 12pt; display: inline-block; }
+.placeholder .ph-file { font-family: "DejaVu Sans Mono", monospace; font-weight: 700;
+                        font-size: 11pt; display: block; margin: 6pt 0 2pt; }
+.placeholder .ph-cap { color: #7a3d36; font-size: 10pt; }

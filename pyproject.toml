@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "md2pdf-clean"
+version = "1.0.0"
+description = "Clean Markdown-to-PDF with named templates, {{VAR}} substitution and images"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Morten Guldager" }]
+dependencies = [
+    # Pinned for reproducible output: same layout/glyphs on every machine.
+    "weasyprint>=63,<64",
+    "markdown>=3.7,<4",
+]
+
+[project.scripts]
+md2pdf = "md2pdf.cli:main"
+
+[tool.hatch.build.targets.wheel]
+# src layout; the CSS files under src/md2pdf/templates are non-.py package data
+# and hatchling includes them automatically.
+packages = ["src/md2pdf"]

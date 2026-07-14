@@ -1,0 +1,124 @@
+<!-- ═══════════════════════════════════════════════════════════════════════
+     AGENT QUICKSTART  ·  read THIS, not the source
+     ═══════════════════════════════════════════════════════════════════════
+You are an AI agent asked to "make this .md a nice PDF" / "render with md2pdf".
+Everything you need is in this block. Do NOT read src/ — the CLI is self-
+describing (`md2pdf render --help`, `md2pdf templates`). Just serve the files
+the way described below and run it.
+
+1. Have the files on disk:  a `guide.md`, and any images it references with a
+   RELATIVE path, e.g. `![caption](screenshots/01.png)`, sitting in that same
+   folder. Caption text = the image's alt-text.
+
+2. Run (no install; needs `uv` — `pip install uv` or https://astral.sh/uv):
+
+     uvx --from git+https://github.com/MortenGuldager/md2pdf@v1 \
+         md2pdf render guide.md -o guide.pdf --template plain
+
+   Images resolve next to the .md automatically. A missing image becomes a
+   visible placeholder — the PDF still builds.
+
+3. Options you actually use:
+     --template NAME   `onboarding` (step-per-page, illustrated) or `plain`
+                       (general document). List: `md2pdf templates`.
+     --var KEY=VALUE   fills a `{{KEY}}` placeholder in the .md; repeatable.
+     --assets DIR      only if images live somewhere other than the .md's folder.
+
+4. System libs: WeasyPrint needs Pango/Cairo. On Debian/Ubuntu, once:
+     sudo apt-get install -y libpango-1.0-0 libpangocairo-1.0-0 libgdk-pixbuf-2.0-0
+
+That's it. Output goes to the -o path (or <input>.pdf). Report the path back.
+════════════════════════════════════════════════════════════════════════ -->
+
+# md2pdf
+
+Turn a Markdown file into a clean, print-ready **PDF** — with named page
+templates, `{{VAR}}` substitution, and inline images (missing images render a
+visible placeholder so the build never fails). One small engine, reused by the
+CLI and importable as a library.
+
+## Install / run
+
+No install needed if you have [`uv`](https://astral.sh/uv):
+
+```sh
+uvx --from git+https://github.com/MortenGuldager/md2pdf@v1 md2pdf render guide.md
+```
+
+Or install it:
+
+```sh
+pip install git+https://github.com/MortenGuldager/md2pdf@v1
+md2pdf render guide.md -o guide.pdf
+```
+
+WeasyPrint needs system libraries (Pango/Cairo). On Debian/Ubuntu:
+
+```sh
+sudo apt-get install -y libpango-1.0-0 libpangocairo-1.0-0 libgdk-pixbuf-2.0-0
+```
+
+## Usage
+
+```sh
+md2pdf render INPUT.md [-o OUT.pdf] [-t TEMPLATE] [--var KEY=VALUE] [--assets DIR] [--html]
+md2pdf templates            # list available templates
+md2pdf render --help
+```
+
+- **Images** — reference them with a relative path in the Markdown
+  (`![My caption](img/step1.png)`). They resolve against the `.md`'s folder
+  (override with `--assets`). The alt-text becomes the figure caption. A missing
+  file renders a dashed placeholder instead of erroring.
+- **Templates** — `onboarding` (each `##` starts a new page — an illustrated,
+  step-per-page guide) and `plain` (a neutral, readable document). Add your own
+  by dropping a `NAME.css` into `src/md2pdf/templates/`.
+- **Substitution** — any `{{KEY}}` in the Markdown is replaced by
+  `--var KEY=value`. Unfilled placeholders are left visible on purpose.
+- **Callouts** — a blockquote beginning `NOTE:`, `WARN:` or `TIP:` renders as a
+  coloured box.
+
+### Example
+
+`guide.md`:
+
+```markdown
+# Kom godt i gang
+
+{{WELCOME}}
+
+## Trin 1
+![Login-siden med reset-linket markeret](screenshots/01-reset.png)
+
+> NOTE: Brug dit korte brugernavn, ikke din e-mail.
+```
+
+```sh
+md2pdf render guide.md -o Kom-godt-i-gang.pdf \
+    --template onboarding --var WELCOME="Velkommen til Regnskab."
+```
+
+## As a library
+
+```python
+from md2pdf import render
+pdf_bytes, missing_images, missing_vars = render(
+    open("guide.md").read(),
+    template="plain",
+    vars={"WELCOME": "Velkommen."},
+    asset_dir="path/to/guide/folder",
+    out_pdf="guide.pdf",
+)
+```
+
+## Notes
+
+- **Reproducible output** — dependencies are version-pinned so glyphs and layout
+  match across machines. For pixel-identical output everywhere, also ensure the
+  same fonts are installed (the templates use DejaVu Sans / Liberation with
+  common fallbacks).
+- **Security** — the renderer's URL fetcher is locked to the asset folder:
+  `file://` paths outside it and any `http(s)://` are refused. Safe to reuse
+  behind a network endpoint later.
+
+MIT.

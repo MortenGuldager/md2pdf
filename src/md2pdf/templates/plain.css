@@ -1,0 +1,56 @@
+/* plain — a clean, neutral A4 document. No forced page break per heading; good
+   default for turning any Markdown note, memo or README into a readable PDF. */
+@page {
+  size: A4;
+  margin: 20mm 18mm 18mm 18mm;
+  @bottom-center { content: "side " counter(page); font-size: 8pt; color: #999; }
+}
+* { box-sizing: border-box; }
+body { font-family: "DejaVu Sans", "Liberation Sans", Arial, sans-serif;
+       font-size: 11pt; line-height: 1.55; color: #1f2933; max-width: 100%; }
+h1 { font-size: 22pt; margin: 0 0 6pt; color: #12303f; }
+h2 { font-size: 16pt; color: #12303f; margin: 20pt 0 6pt;
+     padding-bottom: 4pt; border-bottom: 1px solid #dfe6ea; }
+h3 { font-size: 13pt; color: #12303f; margin: 14pt 0 4pt; }
+h4 { font-size: 11.5pt; color: #33454f; margin: 12pt 0 3pt; }
+p { margin: 6pt 0; }
+ul, ol { margin: 6pt 0 8pt; padding-left: 22pt; }
+li { margin: 3pt 0; }
+strong { color: #12303f; }
+hr { border: 0; border-top: 1px solid #dfe6ea; margin: 16pt 0; }
+code { background: #f0f3f5; padding: 1px 4px; border-radius: 3px;
+       font-family: "DejaVu Sans Mono", monospace; font-size: 9.5pt; }
+pre { background: #f6f8fa; border: 1px solid #e3e8ec; border-radius: 6px;
+      padding: 10pt 12pt; overflow: auto; break-inside: avoid; }
+pre code { background: none; padding: 0; font-size: 9pt; line-height: 1.4; }
+a { color: #0b6ca8; text-decoration: none; }
+
+blockquote { margin: 10pt 0; padding: 8pt 12pt; border-radius: 6px;
+             border-left: 4px solid #9aa7b0; background: #f5f7f8; break-inside: avoid; }
+blockquote p { margin: 0; }
+blockquote.warn { border-left-color: #c0392b; background: #fdeeec; }
+blockquote.note { border-left-color: #0b6ca8; background: #eef5fb; }
+blockquote.tip  { border-left-color: #2e8b57; background: #eef8f1; }
+blockquote .tag { font-weight: 700; letter-spacing: .03em; }
+blockquote.warn .tag { color: #c0392b; }
+blockquote.note .tag { color: #0b6ca8; }
+blockquote.tip  .tag { color: #2e8b57; }
+
+table { border-collapse: collapse; width: 100%; margin: 10pt 0; font-size: 10pt;
+        break-inside: avoid; }
+th, td { border: 1px solid #d7dee3; padding: 5pt 8pt; text-align: left; vertical-align: top; }
+th { background: #12303f; color: #fff; }
+tr:nth-child(even) td { background: #f7f9fa; }
+
+figure { margin: 12pt 0; break-inside: avoid; text-align: center; }
+figure img { max-width: 100%; max-height: 150mm; border: 1px solid #d7dee3; border-radius: 6px; }
+figcaption { font-size: 9.5pt; color: #5a6b78; margin-top: 5pt; font-style: italic; }
+
+.placeholder { border: 2px dashed #b0392b; border-radius: 8px; background: #fff7f6;
+               padding: 18pt 14pt; color: #b0392b; text-align: center; break-inside: avoid; }
+.placeholder .ph-cam { font-size: 11pt; font-weight: 700; letter-spacing: .15em;
+                       border: 2px solid #b0392b; border-radius: 20px; padding: 3pt 12pt;
+                       display: inline-block; }
+.placeholder .ph-file { font-family: "DejaVu Sans Mono", monospace; font-weight: 700;
+                        font-size: 10.5pt; display: block; margin: 6pt 0 2pt; }
+.placeholder .ph-cap { color: #7a3d36; font-size: 9.5pt; }
