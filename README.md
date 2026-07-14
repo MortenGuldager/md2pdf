@@ -121,4 +121,4 @@ pdf_bytes, missing_images, missing_vars = render(
   `file://` paths outside it and any `http(s)://` are refused. Safe to reuse
   behind a network endpoint later.
 
-MIT.
+Released into the public domain under the [Unlicense](LICENSE).

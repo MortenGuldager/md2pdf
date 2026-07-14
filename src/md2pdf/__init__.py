@@ -7,4 +7,4 @@ from .core import (
 )
 
 __all__ = ["render", "build_html", "list_templates", "load_template"]
-__version__ = "1.0.0"
+__version__ = "1.0.1"
