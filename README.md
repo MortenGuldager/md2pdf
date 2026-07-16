@@ -12,7 +12,7 @@ the way described below and run it.
 
 2. Run (no install; needs `uv` — `pip install uv` or https://astral.sh/uv):
 
-     uvx --from git+https://github.com/MortenGuldager/md2pdf@v1 \
+     uvx --from git+https://github.com/MortenGuldager/md2pdf@main \
          md2pdf render guide.md -o guide.pdf --template plain
 
    Images resolve next to the .md automatically. A missing image becomes a
@@ -39,26 +39,29 @@ CLI and importable as a library.
 
 ## Install / run
 
+The `@main` in the URLs below tracks the latest version. Swap it for `@v1` to
+**pin** to a fixed, reproducible release (see [Notes](#notes)).
+
 **One-off, no install** — if you have [`uv`](https://astral.sh/uv), run it straight
 from git (uv fetches and caches it for you):
 
 ```sh
-uvx --from git+https://github.com/MortenGuldager/md2pdf@v1 md2pdf render guide.md
+uvx --from git+https://github.com/MortenGuldager/md2pdf@main md2pdf render guide.md
 ```
 
 **Daily use (recommended)** — install once and get a plain `md2pdf` command on your
 `PATH`, so you never type the long `--from …` line again:
 
 ```sh
-uv tool install git+https://github.com/MortenGuldager/md2pdf@v1
+uv tool install git+https://github.com/MortenGuldager/md2pdf@main
 md2pdf render guide.md -o guide.pdf --template plain
 ```
 
 This is the smart choice for repeated use: unlike a shell alias it also works in
-scripts, cron and other tools, and the version stays pinned. Handy follow-ups:
+scripts, cron and other tools. Handy follow-ups:
 
 ```sh
-uv tool upgrade md2pdf      # pull the latest @v1
+uv tool upgrade md2pdf      # re-resolve @main to its latest commit
 uv tool list                # see what's installed
 uv tool uninstall md2pdf    # remove it
 ```
@@ -70,7 +73,7 @@ If `md2pdf` isn't found afterwards, make sure uv's bin dir is on your `PATH`
 **Or with pip:**
 
 ```sh
-pip install git+https://github.com/MortenGuldager/md2pdf@v1
+pip install git+https://github.com/MortenGuldager/md2pdf@main
 md2pdf render guide.md -o guide.pdf
 ```
 
@@ -135,6 +138,10 @@ pdf_bytes, missing_images, missing_vars = render(
 
 ## Notes
 
+- **`@main` vs `@v1`** — install from `@main` to always get the newest version, or
+  pin to `@v1` (a fixed tag) for a reproducible build that won't change under you.
+  Either way the package's own dependencies stay version-pinned (below); the ref
+  only chooses which snapshot of md2pdf itself you install.
 - **Reproducible output** — dependencies are version-pinned so glyphs and layout
   match across machines. For pixel-identical output everywhere, also ensure the
   same fonts are installed (the templates use DejaVu Sans / Liberation with
