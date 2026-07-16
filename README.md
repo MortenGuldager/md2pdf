@@ -39,13 +39,35 @@ CLI and importable as a library.
 
 ## Install / run
 
-No install needed if you have [`uv`](https://astral.sh/uv):
+**One-off, no install** — if you have [`uv`](https://astral.sh/uv), run it straight
+from git (uv fetches and caches it for you):
 
 ```sh
 uvx --from git+https://github.com/MortenGuldager/md2pdf@v1 md2pdf render guide.md
 ```
 
-Or install it:
+**Daily use (recommended)** — install once and get a plain `md2pdf` command on your
+`PATH`, so you never type the long `--from …` line again:
+
+```sh
+uv tool install git+https://github.com/MortenGuldager/md2pdf@v1
+md2pdf render guide.md -o guide.pdf --template plain
+```
+
+This is the smart choice for repeated use: unlike a shell alias it also works in
+scripts, cron and other tools, and the version stays pinned. Handy follow-ups:
+
+```sh
+uv tool upgrade md2pdf      # pull the latest @v1
+uv tool list                # see what's installed
+uv tool uninstall md2pdf    # remove it
+```
+
+If `md2pdf` isn't found afterwards, make sure uv's bin dir is on your `PATH`
+(`uv tool update-shell`, then restart the shell). The installed package is named
+`md2pdf-clean`, but the command it exposes is `md2pdf`.
+
+**Or with pip:**
 
 ```sh
 pip install git+https://github.com/MortenGuldager/md2pdf@v1
